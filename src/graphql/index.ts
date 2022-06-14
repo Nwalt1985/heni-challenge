@@ -1,15 +1,19 @@
-"use strict";
+import { ApolloServer } from "apollo-server-lambda";
+import { ApolloServerPluginLandingPageGraphQLPlayground } from "apollo-server-core";
+import { resolvers } from "./resolvers";
 
-module.exports.handler = async (event: any) => {
-  return {
-    statusCode: 200,
-    body: JSON.stringify(
-      {
-        message: "Go Serverless v3.0! Your function executed successfully!",
-        input: event,
-      },
-      null,
-      2
-    ),
-  };
-};
+const server = new ApolloServer({
+  typeDefs: [],
+  resolvers,
+  introspection: true,
+  plugins: [ApolloServerPluginLandingPageGraphQLPlayground()],
+});
+
+module.exports.handler = server.createHandler({
+  expressGetMiddlewareOptions: {
+    cors: {
+      origin: "*",
+      credentials: true,
+    },
+  },
+});
