@@ -1,0 +1,21 @@
+org: nathan85
+app: heni
+service: heni
+frameworkVersion: "3"
+
+plugins:
+  - serverless-offline
+  - serverless-plugin-typescript
+
+provider:
+  name: aws
+  runtime: nodejs14.x
+
+functions:
+  graphql:
+    handler: src/graphql/index.handler
+    events:
+      - http:
+          method: ANY
+          path: /graphql/
+          cors: true
