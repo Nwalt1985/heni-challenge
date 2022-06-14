@@ -1,23 +1,56 @@
-import { resolvers } from "../graphql/resolvers";
+import { getData } from "../helpers";
 import mockData from "./data";
 import axios from "axios";
 import { config } from "../config";
 
 jest.mock("axios");
 
-describe("Hello world", () => {
+describe("getData", () => {
+  it("should throw error if GET call fails", async () => {
+    (axios.get as jest.Mock).mockRejectedValueOnce(
+      new Error("something went wrong")
+    );
+
+    try {
+      await getData();
+    } catch ({ message }) {
+      expect(axios.get).toHaveBeenCalledWith(
+        "https://api.harvardartmuseums.org/object",
+        {
+          params: {
+            apikey: config.apiKey,
+            page: 1,
+            classification: "Prints",
+            sort: "rank",
+            sortorder: "desc",
+            hasImage: 1,
+            q: "accesslevel:1 AND verificationlevel:4",
+          },
+          responseType: "json",
+        }
+      );
+      expect(message).toEqual("something went wrong");
+    }
+  });
+
   it("should return mocked data", async () => {
     (axios.get as jest.Mock).mockResolvedValueOnce({
       data: mockData,
     });
 
-    const result = await resolvers.Query.getPrints();
+    const result = await getData();
 
     expect(axios.get).toHaveBeenCalledWith(
       "https://api.harvardartmuseums.org/object",
       {
         params: {
           apikey: config.apiKey,
+          page: 1,
+          classification: "Prints",
+          sort: "rank",
+          sortorder: "desc",
+          hasImage: 1,
+          q: "accesslevel:1 AND verificationlevel:4",
         },
         responseType: "json",
       }

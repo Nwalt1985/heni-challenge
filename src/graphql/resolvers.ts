@@ -1,21 +1,18 @@
-import axios from "axios";
-import { config } from "../config";
-import { PrintsResponse } from "../types/response.types";
+import { getData } from "../helpers";
 
 export const resolvers = {
   Query: {
-    getPrints: async () => {
-      const { data } = await axios.get<PrintsResponse>(
-        "https://api.harvardartmuseums.org/object",
-        {
-          params: {
-            apikey: config.apiKey,
-          },
-          responseType: "json",
-        }
-      );
+    getPrints: async (
+      parent: any,
+      args: { page: number },
+      context: any,
+      info: any
+    ) => {
+      let { page } = args;
+      if (page === 0) page = 1;
+      const responseData = await getData(page);
 
-      return data;
+      return responseData;
     },
   },
 };
