@@ -6,7 +6,7 @@ import { config } from "../config";
 jest.mock("axios");
 
 describe("Hello world", () => {
-  it("should return successfully", async () => {
+  it("should return mocked data", async () => {
     (axios.get as jest.Mock).mockResolvedValueOnce({
       data: mockData,
     });

@@ -15,8 +15,6 @@ export const resolvers = {
         }
       );
 
-      console.log(data);
-
       return data;
     },
   },
