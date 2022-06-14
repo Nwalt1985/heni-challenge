@@ -7,6 +7,8 @@ plugins:
   - serverless-offline
   - serverless-plugin-typescript
 
+useDotenv: true
+
 provider:
   name: aws
   runtime: nodejs14.x

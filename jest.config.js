@@ -2,8 +2,14 @@
 module.exports = {
   preset: "ts-jest",
   testEnvironment: "node",
-  collectCoverage: true,
-  coverageDirectory: "coverage",
-  testPathIgnorePatterns: ["/node_modules", "/build"],
-  roots: ["<rootDir>/src"],
+  testPathIgnorePatterns: ["./node_modules/", ".build"],
+  extensionsToTreatAsEsm: [".ts"],
+  globals: {
+    "ts-jest": {
+      useESM: true,
+    },
+  },
+  moduleNameMapper: {
+    "^(\\.{1,2}/.*)\\.js$": "$1",
+  },
 };

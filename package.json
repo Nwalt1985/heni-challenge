@@ -4,13 +4,15 @@
   "description": "Heni Challenge",
   "main": "index.ts",
   "scripts": {
-    "build": "tsc",
+    "build": "tsc --resolveJsonModule",
     "test": "jest"
   },
   "author": "",
   "license": "ISC",
   "dependencies": {
     "apollo-server-lambda": "^3.8.2",
+    "axios": "^0.27.2",
+    "dotenv": "^16.0.1",
     "serverless": "^3.19.0",
     "ts-node": "^10.8.1"
   },

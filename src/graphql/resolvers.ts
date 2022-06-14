@@ -1,7 +1,23 @@
+import axios from "axios";
+import { config } from "../config";
+import { PrintsResponse } from "../types/response.types";
+
 export const resolvers = {
   Query: {
     getPrints: async () => {
-      return "hello world";
+      const { data } = await axios.get<PrintsResponse>(
+        "https://api.harvardartmuseums.org/object",
+        {
+          params: {
+            apikey: config.apiKey,
+          },
+          responseType: "json",
+        }
+      );
+
+      console.log(data);
+
+      return data;
     },
   },
 };
