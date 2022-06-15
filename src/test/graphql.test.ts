@@ -12,7 +12,7 @@ describe("getData", () => {
     );
 
     try {
-      await getData();
+      await getData(1);
     } catch ({ message }) {
       expect(axios.get).toHaveBeenCalledWith(
         "https://api.harvardartmuseums.org/object",
@@ -38,7 +38,7 @@ describe("getData", () => {
       data: mockData,
     });
 
-    const result = await getData();
+    const result = await getData(1);
 
     expect(axios.get).toHaveBeenCalledWith(
       "https://api.harvardartmuseums.org/object",

@@ -3,11 +3,11 @@ import axios from "axios";
 import { config } from "../config";
 import { SearchParams } from "../types/request.types";
 
-export async function getData(page?: number) {
+export async function getData(page: number) {
   try {
     const params = {
       apikey: config.apiKey,
-      page: page || 1,
+      page,
       classification: "Prints",
       sort: "rank",
       sortorder: "desc",
