@@ -21,3 +21,5 @@ functions:
           method: ANY
           path: /graphql/
           cors: true
+    environment:
+      API_KEY: ${param:API_KEY}

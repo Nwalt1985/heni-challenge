@@ -1,72 +1,110 @@
-<!--
-title: 'AWS NodeJS Example'
-description: 'This template demonstrates how to deploy a NodeJS function running on AWS Lambda using the traditional Serverless Framework.'
-layout: Doc
-framework: v3
-platform: AWS
-language: nodeJS
-priority: 1
-authorLink: 'https://github.com/serverless'
-authorName: 'Serverless, inc.'
-authorAvatar: 'https://avatars1.githubusercontent.com/u/13742415?s=200&v=4'
--->
+# Overview
 
+This service is a microservice that utilises AWS Lambda & API Gateway. It provides a GraphQL endpoint that can be queried to return data from https://api.harvardartmuseums.org/object API.
 
-# Serverless Framework AWS NodeJS Example
+The data conatins publicly accessable information on items classified as 'Prints', the data is ordered by rank in descending order, contains images and verified by the 'Best' standard.
 
-This template demonstrates how to deploy a NodeJS function running on AWS Lambda using the traditional Serverless Framework. The deployed function does not include any event definitions as well as any kind of persistence (database). For more advanced configurations check out the [examples repo](https://github.com/serverless/examples/) which includes integrations with SQS, DynamoDB or examples of functions that are triggered in `cron`-like manner. For details about configuration of specific `events`, please refer to our [documentation](https://www.serverless.com/framework/docs/providers/aws/events/).
+# Local development
 
-## Usage
-
-### Deployment
-
-In order to deploy the example, you need to run the following command:
+Clone the repo and run
 
 ```
-$ serverless deploy
+npm i
 ```
 
-After running deploy, you should see output similar to:
+You will need the serverless framework installed globally
+
+```
+$ npm i serverless -g
+```
+
+In order to run the service locally run one of the following commands:
+
+```
+$ serverless offline
+```
+
+```
+$ sls offline
+```
+
+```
+$ npm run dev
+```
+
+After running you should see an output similar to the following:
 
 ```bash
-Deploying aws-node-project to stage dev (us-east-1)
+Starting Offline at stage dev (us-east-1)
 
-✔ Service deployed to stack aws-node-project-dev (112s)
+Offline [http for lambda] listening on http://localhost:3002
+Function names exposed for local invocation by aws-sdk:
+           * graphql: heni-dev-graphql
 
-functions:
-  hello: aws-node-project-dev-hello (1.5 kB)
+   ┌───────────────────────────────────────────────────────────────────────────┐
+   │                                                                           │
+   │   ANY | http://localhost:3000/dev/graphql                                 │
+   │   POST | http://localhost:3000/2015-03-31/functions/graphql/invocations   │
+   │                                                                           │
+   └───────────────────────────────────────────────────────────────────────────┘
+
+Server ready: http://localhost:3000 🚀
+
+Enter "rp" to replay the last request
 ```
 
-### Invocation
+### Jest tests
 
-After successful deployment, you can invoke the deployed function by using the following command:
+To run the tests run the following
+
+```
+npm run test
+```
+
+You should see the following output if tests run successfully
 
 ```bash
-serverless invoke --function hello
+> heni@1.0.0 test
+> jest
+
+ PASS  src/test/graphql.test.ts (5.156 s)
+ PASS  src/test/integration/graphql.integration.test.ts (5.936 s)
+
+Test Suites: 2 passed, 2 total
+Tests:       3 passed, 3 total
+Snapshots:   0 total
+Time:        6.466 s
+Ran all test suites.
 ```
 
-Which should result in response similar to the following:
+# GraphQL
 
-```json
-{
-    "statusCode": 200,
-    "body": "{\n  \"message\": \"Go Serverless v3.0! Your function executed successfully!\",\n  \"input\": {}\n}"
-}
-```
+A graphQL playground is available locally by navigating to:
 
-### Local development
+- http://localhost:3000/dev/graphql
 
-You can invoke your function locally by using the following command:
+The deployed graphQL playground can be accessed by navigating to:
 
-```bash
-serverless invoke local --function hello
-```
+- https://5m1eti5xcd.execute-api.us-east-1.amazonaws.com/dev/graphql
 
-Which should result in response similar to the following:
+### Example query
 
 ```
-{
-    "statusCode": 200,
-    "body": "{\n  \"message\": \"Go Serverless v3.0! Your function executed successfully!\",\n  \"input\": \"\"\n}"
+getPrints(page: 1) {
+    info {
+      page
+      totalrecords
+      pages
+    }
+    records {
+      id
+      rank
+      description
+      title
+      images {
+
+      }
+    }
+  }
 }
 ```
