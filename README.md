@@ -2,7 +2,7 @@
 
 This service is a microservice that utilises AWS Lambda & API Gateway. It provides a GraphQL endpoint that can be queried to return data from https://api.harvardartmuseums.org/object API.
 
-The data conatins publicly accessable information on items classified as 'Prints', the data is ordered by rank in descending order, contains images and verified by the 'Best' standard.
+The data contains publicly accessible information on items classified as 'Prints', the data is ordered by rank in descending order, contains images and verified by the 'Best' standard.
 
 # Local development
 
