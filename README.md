@@ -18,6 +18,8 @@ You will need the serverless framework installed globally
 $ npm i serverless -g
 ```
 
+**Make sure you create a .env and add a value to API_KEY**
+
 In order to run the service locally run one of the following commands:
 
 ```
@@ -108,3 +110,15 @@ getPrints(page: 1) {
   }
 }
 ```
+
+# Notes
+
+## Improvements
+
+- Could make the graphql endpoint private by adding an api key. This would allow a usage plan to be created (if needed).
+- If the service was to be scaled up and more resolver functions added I would be more strict with naming conventions and adding comments to functions that are complex
+- More unit & integrations tests (if scaled up)
+- Add a service schema to the documentation
+- CI/CD pipeline
+- Could add a VPC to add an extra layer of security
+- If the API being called was rate limited, I would use a timed lambda to fetch data and store in a NoSQL database. GraphQL would query the DB instead of hitting the API directly.
