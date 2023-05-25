@@ -87,7 +87,7 @@ A graphQL playground is available locally by navigating to:
 
 The deployed graphQL playground can be accessed by navigating to:
 
-- https://5m1eti5xcd.execute-api.us-east-1.amazonaws.com/dev/graphql
+- https://424gzb5ria.execute-api.us-east-1.amazonaws.com/dev/graphql
 
 ### Example query
 
